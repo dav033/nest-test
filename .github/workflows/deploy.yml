@@ -1,13 +1,30 @@
-name: Test Runner Nest
+name: Deploy Nest
 
 on:
   push:
     branches: [dev]
 
 jobs:
-  test:
+  build:
     runs-on: [self-hosted, nest]
     steps:
-      - name: Confirmar runner
-        run: echo "Runner nest funcionando en $env:COMPUTERNAME"
+      - name: Checkout código
+        uses: actions/checkout@v4
+        with:
+          clean: false
+
+      - name: Versión de node
+        run: node -v
+        shell: powershell
+
+      - name: Instalar dependencias
+        run: npm ci
+        shell: powershell
+
+      - name: Build
+        run: npm run build
+        shell: powershell
+
+      - name: Confirmar que dist se generó
+        run: dir dist
         shell: powershell
