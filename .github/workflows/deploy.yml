@@ -29,10 +29,10 @@ jobs:
         run: dir dist
         shell: powershell
 
-      - name: Debug contexto del runner
-        run: |
-          whoami
-          echo "PM2_HOME = $env:PM2_HOME"
-          Get-Command pm2 | Select-Object Source
-          pm2 list
+      - name: Redeploy con PM2
         shell: powershell
+        env:
+          PM2_HOME: D:\Node\pm2-nest
+        run: |
+          pm2 startOrRestart ecosystem.config.js --update-env
+          pm2 save
