@@ -28,3 +28,11 @@ jobs:
       - name: Confirmar que dist se generó
         run: dir dist
         shell: powershell
+
+      - name: Debug contexto del runner
+        run: |
+          whoami
+          echo "PM2_HOME = $env:PM2_HOME"
+          Get-Command pm2 | Select-Object Source
+          pm2 list
+        shell: powershell
